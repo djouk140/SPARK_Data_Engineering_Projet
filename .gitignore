@@ -9,3 +9,5 @@ spark/models/
 models/
 reports/
 data/sentiment140.csv
+
+~$*.pptx
