@@ -1,0 +1,19 @@
+FROM apache/spark:4.2.0-python3
+
+USER root
+COPY mastodon-spark-project/requirements-streaming.txt /tmp/requirements-streaming.txt
+RUN python3 -m pip install --no-cache-dir -r /tmp/requirements-streaming.txt \
+    && mkdir -p /opt/spark-checkpoints \
+    && mkdir -p /tmp/spark-home \
+    && chown -R spark:spark /opt/spark-checkpoints /tmp/spark-home
+
+WORKDIR /app
+COPY --chown=spark:spark spark /app/spark
+
+ENV HOME=/tmp/spark-home \
+    JAVA_TOOL_OPTIONS=-Duser.home=/tmp/spark-home \
+    SPARK_HOME=/opt/spark \
+    PYTHONPATH=/opt/spark/python:/opt/spark/python/lib/py4j-0.10.9.9-src.zip
+
+USER spark
+CMD ["python3", "-m", "spark.streaming"]

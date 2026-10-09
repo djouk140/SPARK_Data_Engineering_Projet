@@ -1,0 +1,11 @@
+.env
+.venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+checkpoints/
+spark/checkpoints/
+spark/models/
+models/
+reports/
+data/sentiment140.csv
